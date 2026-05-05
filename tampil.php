@@ -48,7 +48,7 @@
 </table>
 
 <script>
-fetch('api.php')
+fetch('https://mobileapi-production-b44c.up.railway.app/api.php')
 .then(response => response.json())
 .then(data => {
     let output = "";
