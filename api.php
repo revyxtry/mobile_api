@@ -1,19 +1,25 @@
 <?php
-header("Content-Type: application/json");
+// Aktifkan laporan error agar muncul di browser/logs
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
 include 'koneksi.php';
 
 $data = array();
-
 $query = mysqli_query($koneksi, "SELECT * FROM mahasiswa");
+
+if (!$query) {
+    echo json_encode(["status" => "error", "query_error" => mysqli_error($koneksi)]);
+    exit;
+}
 
 while($row = mysqli_fetch_assoc($query)){
     $data[] = $row;
 }
 
-echo json_encode($data, JSON_PRETTY_PRINT);
+echo json_encode($data);
 ?>
